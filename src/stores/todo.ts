@@ -20,24 +20,25 @@ export const useTodoStore = defineStore('todoapp', () => {
     state.todos.push({
       id: state.todos.length,
       text,
-      done: false,
+      done: true,
     })
   }
   const remove = (id: number) => {
-    state.todos = state.todos.filter((todo) => todo.id !== id)
+    state.todos = state.todos.filter((todo:Todo) => todo.id !== id)
   }
   const toggle = (id: number) => {
-    const todo = state.todos.find((todo) => todo.id === id)
-    if (todo) {
+    console.log('toggle: ', id)
+    const todo:Todo = state.todos.value.find((todo:Todo) => todo.id === id)
+    if (todo !== undefined) {
       todo.done = !todo.done
     }
-  }
-  const edit = (id: number, text: string) => {
-    const todo = state.todos.find((todo) => todo.id === id)
-    if (todo) {
-      todo.text = text
+    }
+  const edit = (_todo: Todo) => {
+    const todo: Todo = state.todos.value.find((todo:Todo) => todo.id === _todo.id)
+    if (todo !== undefined) {
+      todo.text = _todo.text
     }
   }
 
-  return { state, add, edit, remove, toggle }
+  return { state, add, remove, toggle, edit }
 })
