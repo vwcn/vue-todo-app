@@ -5,27 +5,27 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="64" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Welcome to Vue World!" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/todo">Todo</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
   </header>
-
-  <RouterView />
+  <main class="container mx-auto p-4 min-w-screen min-h-80vh">
+    <RouterView />
+  </main>
+  <footer class="absolute bottom-0 w-full text-center p-4">
+    <h3>&copy; Ruipu Software 2007-2024</h3>
+  </footer>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
 .logo {
   display: block;
   margin: 0 auto 2rem;
