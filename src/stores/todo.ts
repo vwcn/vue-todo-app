@@ -12,40 +12,40 @@ const initialTodos: Todo[] = [
 ]
 
 export const useTodoStore = defineStore('todoapp', {
-
-  state: ()=> ({
+  state: () => ({
     todos: [...initialTodos] as Todo[],
-    filter:'all' as 'all'| 'done' | 'todo',
-    key: "TODO_APP",
+    filter: 'all' as 'all' | 'done' | 'todo',
+    key: 'TODO_APP',
   }),
   getters: {
     filteredList(): Todo[] {
       switch (this.filter) {
         case 'done':
-          return this.todos.filter((todo:Todo) => todo.done)
+          return this.todos.filter((todo: Todo) => todo.done)
         case 'todo':
-          return this.todos.filter((todo:Todo) => !todo.done)
+          return this.todos.filter((todo: Todo) => !todo.done)
         default:
           return this.todos
       }
-    }
+    },
   },
   actions: {
-    add(text: string){
+    add(text: string) {
+      console.log('add new todo: ', text)
       this.todos.push({
         id: this.todos.length,
         text,
-        done: true,
+        done: false,
       })
     },
     remove(id: number) {
-      this.todos = this.todos.filter((todo:Todo) => todo.id !== id)
+      this.todos = this.todos.filter((todo: Todo) => todo.id !== id)
     },
-    edit (_todo: Todo){
-      const todo: Todo = this.todos.find((todo:Todo) => todo.id === _todo.id)
+    edit(_todo: Todo) {
+      const todo: Todo = this.todos.find((todo: Todo) => todo.id === _todo.id)
       if (todo !== undefined) {
         todo.text = _todo.text
       }
-    }
-  }
+    },
+  },
 })

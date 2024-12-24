@@ -4,7 +4,6 @@
     <div>
       <label htmlFor="task">New Task:</label>
       <input
-
         class="mx-4 p-2 border border-gray-300 rounded-lg"
         v-model="task"
         name="task"
@@ -20,12 +19,12 @@
 import { ref } from 'vue'
 import { useTodoStore } from '../../stores/todo'
 
-const task = ref('new task')
+const task = ref('')
 const todos = useTodoStore()
 
 function addTodo() {
   todos.add(task.value)
-  task.value = 'test task'
+  task.value = ''
 }
 </script>
 
