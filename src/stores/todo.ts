@@ -15,7 +15,8 @@ export const useTodoStore = defineStore('todoapp', {
 
   state: ()=> ({
     todos: [...initialTodos] as Todo[],
-    filter:'all' as 'all'| 'done' | 'todo'
+    filter:'all' as 'all'| 'done' | 'todo',
+    key: "TODO_APP",
   }),
   getters: {
     filteredList(): Todo[] {
