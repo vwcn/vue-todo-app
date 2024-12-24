@@ -27,14 +27,13 @@ export const useTodoStore = defineStore('todoapp', () => {
     state.todos = state.todos.filter((todo:Todo) => todo.id !== id)
   }
   const toggle = (id: number) => {
-    console.log('toggle: ', id)
-    const todo:Todo = state.todos.value.find((todo:Todo) => todo.id === id)
+    const todo:Todo = state.todos.find((todo:Todo) => todo.id === id)
     if (todo !== undefined) {
       todo.done = !todo.done
     }
     }
   const edit = (_todo: Todo) => {
-    const todo: Todo = state.todos.value.find((todo:Todo) => todo.id === _todo.id)
+    const todo: Todo = state.todos.find((todo:Todo) => todo.id === _todo.id)
     if (todo !== undefined) {
       todo.text = _todo.text
     }
