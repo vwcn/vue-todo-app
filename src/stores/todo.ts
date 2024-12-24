@@ -1,4 +1,3 @@
-import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 export interface Todo {
@@ -12,32 +11,40 @@ const initialTodos: Todo[] = [
   { id: 1, text: 'Learn Pinia', done: false },
 ]
 
-export const useTodoStore = defineStore('todoapp', () => {
-  const state = reactive({
-    todos: [...initialTodos] as Todo[],
-  })
-  const add = (text: string) => {
-    state.todos.push({
-      id: state.todos.length,
-      text,
-      done: true,
-    })
-  }
-  const remove = (id: number) => {
-    state.todos = state.todos.filter((todo:Todo) => todo.id !== id)
-  }
-  const toggle = (id: number) => {
-    const todo:Todo = state.todos.find((todo:Todo) => todo.id === id)
-    if (todo !== undefined) {
-      todo.done = !todo.done
-    }
-    }
-  const edit = (_todo: Todo) => {
-    const todo: Todo = state.todos.find((todo:Todo) => todo.id === _todo.id)
-    if (todo !== undefined) {
-      todo.text = _todo.text
-    }
-  }
+export const useTodoStore = defineStore('todoapp', {
 
-  return { state, add, remove, toggle, edit }
+  state: ()=> ({
+    todos: [...initialTodos] as Todo[],
+    filter:'all' as 'all'| 'done' | 'todo'
+  }),
+  getters: {
+    filteredList(): Todo[] {
+      switch (this.filter) {
+        case 'done':
+          return this.todos.filter((todo:Todo) => todo.done)
+        case 'todo':
+          return this.todos.filter((todo:Todo) => !todo.done)
+        default:
+          return this.todos
+      }
+    }
+  },
+  actions: {
+    add(text: string){
+      this.todos.push({
+        id: this.todos.length,
+        text,
+        done: true,
+      })
+    },
+    remove(id: number) {
+      this.todos = this.todos.filter((todo:Todo) => todo.id !== id)
+    },
+    edit (_todo: Todo){
+      const todo: Todo = this.todos.find((todo:Todo) => todo.id === _todo.id)
+      if (todo !== undefined) {
+        todo.text = _todo.text
+      }
+    }
+  }
 })

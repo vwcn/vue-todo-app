@@ -21,9 +21,10 @@ import { ref } from 'vue'
 import { useTodoStore } from '../../stores/todo'
 
 const task = ref('new task')
+const todos = useTodoStore()
 
 function addTodo() {
-  useTodoStore().add(task.value)
+  todos.add(task.value)
   task.value = 'test task'
 }
 </script>
