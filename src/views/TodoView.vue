@@ -1,11 +1,10 @@
 
+
 <template>
-  <div class="about">
-    <h1>Todo View</h1>
+  <div class="todo">
+    <TodoApp />
   </div>
 </template>
-
-<style>
-</style>
-
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import TodoApp from '../components/todo/TodoApp.vue'
+</script>

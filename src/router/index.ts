@@ -20,8 +20,8 @@ const router = createRouter({
     {
       path: '/todo',
       name: 'todo',
-      Comment: () => import('../views/TodoView.vue'),
-    }
+      component: () => import('../views/TodoView.vue'),
+    },
   ],
 })
 
