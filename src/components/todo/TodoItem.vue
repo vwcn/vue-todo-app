@@ -10,7 +10,29 @@
       <div class="col-span-1 md:col-span-4 lg:col-span-6" >
         <span :class="{completed: todo.done}">{{ todo.text }}</span>
       </div>
-      <div class="col-span-1 md:col-span-2 lg:col-span-2"><button @click="todos.remove(_todo.id)">Remove</button></div>
+      <div class="col-span-1 md:col-span-2 lg:col-span-2">
+        <AlertDialog>
+    <AlertDialogTrigger as-child>
+      <Button variant="destructive" size="sm">
+        remove
+      </Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Are you sure to remove todo: {{_todo.text}}?</AlertDialogTitle>
+        <AlertDialogDescription>
+          This action cannot be undone. This will permanently delete the todo from the list
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction>
+          <Button variant="destructive" @click="todos.remove(_todo.id)">Confirm</Button>
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+      </div>
     </div>
   </div>
   <div v-else>
@@ -44,5 +66,19 @@ const todos = useTodoStore()
 const props = defineProps<{ todo: Todo }>()
 const isEditing = ref(false)
 const _todo = todos.filteredList.find(todo => todo.id === props.todo.id)
+
+// shadcn
+import { Button } from '@/components/ui/button'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 </script>
