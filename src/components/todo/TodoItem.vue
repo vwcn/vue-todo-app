@@ -3,7 +3,7 @@
   <div v-if="!isEditing">
     <div class=" bg-gray-300 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 p-4">
       <div class="col-span-1 md:col-span-1 lg:col-span-2">
-        <input type="checkbox" id='done' v-model="_todo.done" />
+        <input type="checkbox" id='done' />
       </div>
       <div class="col-span-1 md:col-span-1 lg:col-span-2">
         <button @click="isEditing=true">{{ todo.id }}</button></div>
@@ -19,15 +19,15 @@
     </AlertDialogTrigger>
     <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle>Are you sure to remove todo: {{_todo.text}}?</AlertDialogTitle>
+        <AlertDialogTitle>Are you sure to remove todo: {{todo.text}}?</AlertDialogTitle>
         <AlertDialogDescription>
           This action cannot be undone. This will permanently delete the todo from the list
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction>
-          <Button variant="destructive" @click="todos.remove(_todo.id)">Confirm</Button>
+        <AlertDialogAction @click="todos.remove(todo.id)">
+          Confirm
         </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
@@ -37,17 +37,7 @@
   </div>
   <div v-else>
     <div>
-      <h3>we are editting the task: {{ todo.text }}</h3>
-      <div>
-        <label>task: <input type='text' name='task' id='task' v-model='_todo.text' /></label>
-      </div>
-      <div>
-        mark it done?: <input type="checkbox" id='done'  v-model="_todo.done" />
-      </div>
-      <div>
-        <button @click="todos.edit(_todo); isEditing=false">Save</button>
-      </div>
-      <button @click="isEditing=false">Cancel</button>
+      <EditTodo :todo="todo" :isNew="false" @eddited="isEditing=false"/>
     </div>
   </div>
 </div>
@@ -63,10 +53,10 @@ import { ref } from 'vue'
 import {  useTodoStore } from '../../stores/todo'
 import type { Todo } from '../../stores/todo'
 const todos = useTodoStore()
-const props = defineProps<{ todo: Todo }>()
+defineProps<{ todo: Todo }>()
 const isEditing = ref(false)
-const _todo = todos.filteredList.find(todo => todo.id === props.todo.id)
 
+import EditTodo from './EditTodo.vue'
 // shadcn
 import { Button } from '@/components/ui/button'
 import {
@@ -80,5 +70,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+
 
 </script>
