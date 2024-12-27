@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-// import { ref } from 'vue'
+import { ref } from 'vue'
 import type { Todo } from '@/stores/todo'
 import { useTodoStore } from '@/stores/todo'
-defineProps<{todo: Todo, isNew: boolean}>();
+const props = defineProps<{todo: Todo, isNew: boolean}>();
 const todos = useTodoStore()
-
+const text = ref(props.todo.text)
+const done = ref(props.todo.done)
 // shadcn form
 import {
   FormControl,
@@ -24,11 +25,16 @@ import { z } from 'zod';
 
 
 const { handleSubmit } = useForm({ validationSchema: toTypedSchema(z.object({
-  task: z.string().min(4)
+  text: z.string().min(4)
 })) });
 
-const onSubmit = handleSubmit(async (values) => {
-  console.log(values)
+const onSubmit = handleSubmit(async (formData) => {
+  console.log(formData)
+  if (props.isNew) {
+    todos.add(formData.text)
+  } else {
+    todos.update(props.todo.id,formData.text)
+  }
 })
 
 // shadcn@/components/ui/button'
@@ -36,7 +42,7 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 <template>
         <form @submit="onSubmit">
-        <FormField v-slot="{componentField }" name="task" :initialValue="'test2s'">
+        <FormField v-slot="{componentField }" name="text">
             <FormItem>
               <FormLabel for="task">New Task</FormLabel>
               <FormControl>
@@ -44,6 +50,8 @@ const onSubmit = handleSubmit(async (values) => {
                   v-bind="componentField"
                   type="text"
                   placeholder="Enter new task"
+                  id="text"
+                  :defaultValue="todo.text"
                 />
               </FormControl>
               <FormDescription>
@@ -53,6 +61,8 @@ const onSubmit = handleSubmit(async (values) => {
             </FormItem>
           </FormField>
           <Button type="submit" variant="default" size="sm">Save</Button>
+
+          <Button variant="secondary" @click.prevent="$emit('editted')" size="sm">Cancel</Button>
         </form>
 
 </template>

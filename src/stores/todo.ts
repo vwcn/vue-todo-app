@@ -41,11 +41,10 @@ export const useTodoStore = defineStore('todoapp', {
     remove(id: number) {
       this.todos = this.todos.filter((todo: Todo) => todo.id !== id)
     },
-    update(_todo: Todo) {
-      const todo: Todo = this.todos.find((todo: Todo) => todo.id === _todo.id)
+    update(id: number,text: string) {
+      const todo: Todo = this.todos.find((todo: Todo) => todo.id === id)
       if (todo !== undefined) {
-        todo.text = _todo.text
-        todo.done = _todo.done
+        todo.text = text
       }
     },
   },

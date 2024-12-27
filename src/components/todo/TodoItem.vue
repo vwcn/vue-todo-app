@@ -37,7 +37,7 @@
   </div>
   <div v-else>
     <div>
-      <EditTodo :todo="todo" :isNew="false" @eddited="isEditing=false"/>
+      <EditTodo :todo="todo" :isNew="false" @editted="handleEddited"/>
     </div>
   </div>
 </div>
@@ -56,6 +56,9 @@ const todos = useTodoStore()
 defineProps<{ todo: Todo }>()
 const isEditing = ref(false)
 
+const handleEddited = () => {
+  isEditing.value = false
+}
 import EditTodo from './EditTodo.vue'
 // shadcn
 import { Button } from '@/components/ui/button'
